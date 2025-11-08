@@ -1,0 +1,13 @@
+module.exports = {
+  useTabs: false,
+  tabWidth: 2,
+  semi: false,
+  singleQuote: false,
+  jsxSingleQuote: false,
+  bracketSpacing: true,
+  bracketSameLine: true,
+  arrowParens: "avoid",
+  trailingComma: "none",
+  printWidth: 80,
+  plugins: ["prettier-plugin-organize-imports"]
+}
