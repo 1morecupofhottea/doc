@@ -3,7 +3,7 @@ import CodeBlock from "../components/CodeBlock"
 
 const GettingStarted: React.FC = () => {
   return (
-    <div className="max-w-4xl mx-auto px-6 py-12 bg-white text-black">
+    <div className="max-w-4xl mx-auto px-6 py-12 bg-slate-950 text-white">
       <section className="mb-12">
         <h1 className="text-3xl font-bold mb-4">Getting Started</h1>
         <p className="mb-6">
@@ -46,7 +46,7 @@ const audio = new SenseAudio();`}
         </p>
         <CodeBlock
           code={`await audio.load('path/to/audio.mp3');
-audio.play();`}
+                audio.play();`}
         />
       </section>
 
@@ -58,7 +58,7 @@ audio.play();`}
         </p>
         <CodeBlock
           code={`const waveform = audio.getWaveform();
-const spectrum = audio.getSpectrum();`}
+                const spectrum = audio.getSpectrum();`}
         />
       </section>
 

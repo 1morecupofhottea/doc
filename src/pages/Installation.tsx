@@ -4,11 +4,11 @@ import NoteBox from "../components/NoteBox"
 
 const Installation: React.FC = () => {
   return (
-    <div className="max-w-4xl mx-auto px-6 py-12 bg-white text-black">
+    <div className="max-w-4xl mx-auto px-6 py-12 bg-slate-950 text-white">
       <section className="mb-12">
         <h1 className="text-3xl font-bold mb-4">Installation</h1>
         <p className="mb-6">
-          Install <span className="font-semibold text-black">Sense Audio</span>{" "}
+          Install <span className="font-semibold text-white">Sense Audio</span>{" "}
           via npm or yarn:
         </p>
         <CodeBlock code="npm install sense-audio" />
@@ -20,18 +20,19 @@ const Installation: React.FC = () => {
         <CodeBlock
           code={`import SenseAudio from 'sense-audio';
 
-// Initialize audio context
-const audio = new SenseAudio();
+                  // Initialize audio context
+                  const audio = new SenseAudio();
 
-// Load an audio file
-await audio.load('path/to/audio.mp3');
+                  // Load an audio file
+                  await audio.load('path/to/audio.mp3');
 
-// Play the audio
-audio.play();
+                  // Play the audio
+                  audio.play();
 
-// Get audio data
-const waveform = audio.getWaveform();
-const spectrum = audio.getSpectrum();`}
+                  // Get audio data
+                  const waveform = audio.getWaveform();
+                  const spectrum = audio.getSpectrum();`
+              }
         />
       </section>
 

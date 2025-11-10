@@ -1,1 +1,44 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: 'Nacelle';
+  src: url('/fonts/nacelle-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nacelle';
+  src: url('/fonts/nacelle-semibold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nacelle';
+  src: url('/fonts/nacelle-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nacelle';
+  src: url('/fonts/nacelle-semibolditalic.woff2') format('woff2');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'YourFontName';
+  src: url('/fonts/your-font-file.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Nacelle', system-ui, -apple-system, sans-serif;
+}

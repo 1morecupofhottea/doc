@@ -26,7 +26,7 @@ const About: React.FC = () => {
   ]
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-12 bg-white text-black">
+    <div className="max-w-4xl mx-auto px-6 py-12 bg-slate-950 text-white">
       <section className="mb-12">
         <h1 className="text-3xl font-bold mb-4">About Sense Audio</h1>
         <p className="mb-6">

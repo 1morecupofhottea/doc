@@ -13,6 +13,8 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
     { name: "Home", path: "/" },
     { name: "Getting Started", path: "/getting-started" },
     { name: "Installation", path: "/installation" },
+    { name: "Model", path: "/model" },
+    { name: "Datasets", path: "/datasets" },
     { name: "About", path: "/about" }
   ]
 
@@ -20,7 +22,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
     <>
       <aside
         className={`
-          fixed top-0 left-0 z-50 h-full flex-col bg-white text-black shadow-lg transition-transform duration-300
+          fixed top-0 left-0 z-50 h-full flex-col bg-[#0f172a] text-white shadow-lg transition-transform duration-300 border-r border-gray-800
           ${open ? "translate-x-0 w-full md:w-64" : "-translate-x-full md:translate-x-0 md:w-64"}
         `}>
         <div className="mt-20 flex flex-col gap-2 px-6">
@@ -31,8 +33,8 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
               onClick={onClose}
               className={`rounded-md px-3 py-2 text-lg font-medium transition ${
                 location.pathname === link.path
-                  ? "bg-slate-200 text-slate-900"
-                  : "hover:bg-slate-100"
+                  ? "bg-slate-700/50 text-white border-l-2 border-indigo-500"
+                  : "text-gray-300 hover:bg-slate-700/30 hover:text-white"
               }`}>
               {link.name}
             </Link>

@@ -8,12 +8,12 @@ interface NoteBoxProps {
 
 const NoteBox: React.FC<NoteBoxProps> = ({ title = "Note", children }) => {
   return (
-    <section className="bg-gray-100 border border-gray-300 rounded-lg p-6">
+    <section className="bg-slate-950 border border-gray-700 rounded-lg p-6">
       <h3 className="font-semibold mb-2 flex items-center gap-2">
         <Info className="h-5 w-5" />
         {title}
       </h3>
-      <div className="text-black text-sm">{children}</div>
+      <div className="text-white text-sm">{children}</div>
     </section>
   )
 }
