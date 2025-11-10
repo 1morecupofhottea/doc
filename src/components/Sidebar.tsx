@@ -22,19 +22,20 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
     <>
       <aside
         className={`
-          fixed top-0 left-0 z-50 h-full flex-col bg-[#0f172a] text-white shadow-lg transition-transform duration-300 border-r border-gray-800
-          ${open ? "translate-x-0 w-full md:w-64" : "-translate-x-full md:translate-x-0 md:w-64"}
+          fixed top-0 left-0 md:left-64 z-40 h-screen w-64 flex flex-col bg-slate-950 text-white transition-transform duration-300
+          ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         `}>
-        <div className="mt-20 flex flex-col gap-2 px-6">
+        {/* Navigation Links */}
+        <div className="flex flex-col gap-0.5 px-3 py-4 mt-16 pl-6 overflow-y-auto flex-1">
           {links.map(link => (
             <Link
               key={link.name}
               to={link.path}
               onClick={onClose}
-              className={`rounded-md px-3 py-2 text-lg font-medium transition ${
+              className={`rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150 ${
                 location.pathname === link.path
-                  ? "bg-slate-700/50 text-white border-l-2 border-indigo-500"
-                  : "text-gray-300 hover:bg-slate-700/30 hover:text-white"
+                  ? "bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400"
+                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white"
               }`}>
               {link.name}
             </Link>
@@ -45,7 +46,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
       {/* Overlay for mobile */}
       {open && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-25 z-40 md:hidden"
+          className="fixed inset-0 bg-black/30 z-40 md:hidden backdrop-blur-sm"
           onClick={onClose}
         />
       )}
