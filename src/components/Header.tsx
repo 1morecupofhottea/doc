@@ -10,7 +10,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
   return (
     <header className="fixed top-0 left-0 right-0 h-16 z-50 bg-slate-950 border-b border-gray-800 flex items-center justify-between px-6 md:px-8">
       {/* Logo */}
-      <Link to="/" className="flex items-center gap-3 pl-60">
+      <Link to="/" className="flex items-center gap-3 pl-30">
         <img
           src="/images/Raw.png"
           alt="Logo"

@@ -11,11 +11,11 @@ const Layout: React.FC = () => {
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
 
   return (
-    <div className="fix flex-col bg-slate-950 text-white min-h-screen">
+    <div className="flex flex-col bg-slate-950 text-white min-h-screen">
       <Header toggleSidebar={toggleSidebar} />
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      <div className="flex-1 ml-0 md:ml-64 bg-slate-950">
-        <main className="pt-16 min-h-screen bg-slate-950">
+      <div className="flex-1 ml-0 md:ml-100 bg-slate-950 pt-16">
+        <main className="w-full bg-slate-950">
           <Outlet />
         </main>
       </div>
