@@ -4,6 +4,12 @@ import { Upload, Sliders, Image as ImageIcon, Sparkles } from "lucide-react";
 
 const API_URL = "http://127.0.0.1:8000/predict";
 
+interface Detection {
+  object: string;
+  confidence: string;
+  box: number[];
+}
+
 // Reusable Card Component
 const Card: React.FC<{ children: React.ReactNode; className?: string }> = ({ 
   children, 
@@ -56,7 +62,7 @@ const Demo: React.FC = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [annotated, setAnnotated] = useState<string | null>(null);
-  const [detections, setDetections] = useState<any[]>([]);
+  const [detections, setDetections] = useState<Detection[]>([]);
   const [conf, setConf] = useState<number>(0.4);
   const [iou, setIou] = useState<number>(0.5);
   const [loading, setLoading] = useState<boolean>(false);
@@ -141,7 +147,95 @@ const Demo: React.FC = () => {
               hover:file:bg-indigo-700 cursor-pointer
               file:transition-all file:duration-200"
           />
+          
+          {/* Preview Image Only - Hidden after prediction */}
+          {preview && !annotated && (
+            <div className="mt-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400">
+                  <ImageIcon size={20} />
+                </div>
+                <h4 className="text-lg font-bold text-white">Preview</h4>
+              </div>
+              <div className="relative overflow-hidden rounded-xl border border-gray-800 bg-slate-950">
+                <img
+                  src={preview}
+                  alt="Uploaded preview"
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+            </div>
+          )}
         </Card>
+
+        {/* Detection Results - Image and Table Side by Side */}
+        {annotated && detections.length > 0 && (
+          <Card className="mb-8">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-3 rounded-lg bg-green-500/10 text-green-400">
+                <Sparkles size={24} />
+              </div>
+              <h3 className="text-2xl font-bold text-white">Detection Results</h3>
+            </div>
+            
+            <div className="grid lg:grid-cols-2 gap-8">
+              {/* Detection Result Image */}
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 rounded-lg bg-green-500/10 text-green-400">
+                    <ImageIcon size={20} />
+                  </div>
+                  <h4 className="text-lg font-bold text-white">Annotated Image</h4>
+                </div>
+                <div className="relative overflow-hidden rounded-xl border border-gray-800 bg-slate-950">
+                  <img
+                    src={annotated}
+                    alt="Detection result"
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+              </div>
+
+              {/* Detection Details Table */}
+              <div>
+                <h4 className="text-lg font-bold mb-4 text-white">Detection Details</h4>
+                <div className="overflow-x-auto rounded-xl border border-gray-800 mb-4">
+                  <table className="w-full">
+                    <thead className="bg-slate-900/50">
+                      <tr>
+                        <th className="px-4 py-3 text-left text-sm font-semibold text-gray-300">Class</th>
+                        <th className="px-4 py-3 text-left text-sm font-semibold text-gray-300">Confidence</th>
+                        <th className="px-4 py-3 text-left text-sm font-semibold text-gray-300">Box</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-800">
+                      {detections.map((det, idx) => (
+                        <tr key={idx} className="hover:bg-slate-900/30 transition-colors">
+                          <td className="px-4 py-3 text-white font-medium">{det.object}</td>
+                          <td className="px-4 py-3">
+                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-500/10 text-green-400 border border-green-500/20">
+                              {det.confidence}
+                            </span>
+                          </td>
+                          <td className="px-4 py-3 text-xs text-gray-400 font-mono">
+                            [{det.box.map((v: number) => v.toFixed(1)).join(", ")}]
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                
+                {/* Summary Stats */}
+                <div className="p-4 rounded-xl bg-indigo-500/10 border border-indigo-500/20">
+                  <p className="text-sm text-indigo-300">
+                    <span className="font-semibold">Total Detections:</span> {detections.length} object{detections.length !== 1 ? 's' : ''} found
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Card>
+        )}
 
         {/* Sliders Section */}
         <Card className="mb-8">
@@ -200,86 +294,6 @@ const Demo: React.FC = () => {
             )}
           </Button>
         </Card>
-
-        {/* Image Previews */}
-        {(preview || annotated) && (
-          <div className="grid md:grid-cols-2 gap-8 mb-8">
-            {preview && (
-              <Card>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-3 rounded-lg bg-blue-500/10 text-blue-400">
-                    <ImageIcon size={24} />
-                  </div>
-                  <h3 className="text-xl font-bold text-white">Original Image</h3>
-                </div>
-                <div className="relative overflow-hidden rounded-xl border border-gray-800 bg-slate-950">
-                  <img
-                    src={preview}
-                    alt="Uploaded"
-                    className="w-full h-auto object-cover"
-                  />
-                </div>
-              </Card>
-            )}
-            {annotated && (
-              <Card>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-3 rounded-lg bg-green-500/10 text-green-400">
-                    <Sparkles size={24} />
-                  </div>
-                  <h3 className="text-xl font-bold text-white">Detection Result</h3>
-                </div>
-                <div className="relative overflow-hidden rounded-xl border border-gray-800 bg-slate-950">
-                  <img
-                    src={annotated}
-                    alt="Result"
-                    className="w-full h-auto object-cover"
-                  />
-                </div>
-              </Card>
-            )}
-          </div>
-        )}
-
-        {/* Detection Table */}
-        {detections.length > 0 && (
-          <Card>
-            <h3 className="text-2xl font-bold mb-6 text-white">Detection Results</h3>
-            <div className="overflow-x-auto rounded-xl border border-gray-800">
-              <table className="w-full">
-                <thead className="bg-slate-900/50">
-                  <tr>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Class</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Confidence</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Bounding Box</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-800">
-                  {detections.map((det, idx) => (
-                    <tr key={idx} className="hover:bg-slate-900/30 transition-colors">
-                      <td className="px-6 py-4 text-white font-medium">{det.object}</td>
-                      <td className="px-6 py-4">
-                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-500/10 text-green-400 border border-green-500/20">
-                          {det.confidence}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-sm text-gray-400 font-mono">
-                        [{det.box.map((v: number) => v.toFixed(1)).join(", ")}]
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            
-            {/* Summary Stats */}
-            <div className="mt-6 p-4 rounded-xl bg-indigo-500/10 border border-indigo-500/20">
-              <p className="text-sm text-indigo-300">
-                <span className="font-semibold">Total Detections:</span> {detections.length} object{detections.length !== 1 ? 's' : ''} found
-              </p>
-            </div>
-          </Card>
-        )}
       </div>
     </div>
   );
