@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Upload, Sliders, Image as ImageIcon, Sparkles } from "lucide-react";
 
-const API_URL = "http://127.0.0.1:8000/predict";
+const API_URL = "https://yolo-api-jvka.onrender.com/predict";
 
 interface Detection {
   object: string;
